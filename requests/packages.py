@@ -16,11 +16,11 @@ for package in ('urllib3', 'idna'):
     # This traversal is apparently necessary such that the identities are
     # preserved (requests.packages.urllib3.* is urllib3.*)
     for mod in list(sys.modules):
-        if mod == package or mod.startswith(package + '.'):
-            sys.modules['requests.packages.' + mod] = sys.modules[mod]
+        if mod == package or mod.startswith(f'{package}.'):
+            sys.modules[f'requests.packages.{mod}'] = sys.modules[mod]
 
 target = chardet.__name__
 for mod in list(sys.modules):
-    if mod == target or mod.startswith(target + '.'):
+    if mod == target or mod.startswith(f'{target}.'):
         sys.modules['requests.packages.' + target.replace(target, 'chardet')] = sys.modules[mod]
 # Kinda cool, though, right?
